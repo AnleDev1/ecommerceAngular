@@ -4,27 +4,39 @@ import { MenuItem } from 'primeng/api';
 import { Menubar } from 'primeng/menubar'
 import {AvatarModule} from 'primeng/avatar'
 import { Menu } from 'primeng/menu';
-
 import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+
+
+import { RegisterComponent } from './register/register.component';
+
+
+
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Menubar, AvatarModule, Menu, Dialog, ButtonModule, InputTextModule],
+  imports: [RouterOutlet, Menubar, AvatarModule, Menu, Dialog, RegisterComponent, ButtonModule, ToastModule
+  ],
+  providers: [MessageService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  
+  styles: []
 })
 export class AppComponent {
+
+
   title = 'ecommerceAngular';
 
    items: MenuItem[] | undefined;
    menun: MenuItem[] | undefined;
-   showDialogRegister: any;
+   showDialogRegister: boolean = false;
    showDialoglogin: any;
+
+    constructor(private messageService: MessageService){}
 
       ngOnInit() {
         this.items = [
@@ -95,5 +107,15 @@ export class AppComponent {
         this.showDialoglogin = false;
     }
 
-    visible: boolean = false;
+   handleRegisterResult(result: { success: boolean; message: string }) {
+    this.showDialogRegister = false;
+
+    this.messageService.add({
+      severity: result.success ? 'success' : 'error',
+      summary: result.success ? '¡Registro exitoso!' : 'Error',
+      detail: result.message,
+      life: 3000
+    });
+  }
+
 }
