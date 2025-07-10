@@ -41,7 +41,7 @@ export class AppComponent {
       ngOnInit() {
         this.items = [
             {
-                label: 'Home',
+                label: 'Productos',
                 icon: 'pi pi-home'
             },
             {

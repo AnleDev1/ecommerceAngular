@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FileUploadModule, FileUploadEvent } from 'primeng/fileupload'
 import { ButtonModule } from 'primeng/button';
 
-import { User } from './User';
+import { User } from '../models/User';
 import { AuthService } from '../services/auth-service';
 
 
@@ -44,6 +44,10 @@ export class RegisterComponent{
     //LLAMADA AL AUTH SERVICE PARA CONSUMO DE API REVISAR AUTHSERVICE.TS
     this.authService.register(formData).subscribe({
       next: (data) =>{
+        const token = data.access_token;
+        if(token){
+          localStorage.setItem('auth_token', token);
+        }
         this.onUserCreated.emit({ success: true, message: data.message });
       },
       error: (err) => {
