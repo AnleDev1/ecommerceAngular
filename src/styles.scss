@@ -3,3 +3,7 @@
 @plugin 'tailwindcss-primeui';
 @layer tailwind, primeng;
 @custom-variant dark (&:where(.my-app-dark, .my-app-dark *));  
+
+.p-dialog {
+  box-shadow: none !important;
+}
